@@ -1,47 +1,15 @@
 [
   {
     "type": "html",
+    "html": ""
+  },
+  {
+    "type": "shortcode",
+    "name": "NewComponant",
+    "attrs": {}
+  },
+  {
+    "type": "html",
     "html": "<h2>Governments have widely varying policies and practices towards journalists</h2>\n<p>By Name Here</p>\n<p>Such a code of conduct can, in the real world, be difficult to uphold consistently. Reporting and editing do not occur in a vacuum but always reflect the political context in which journalists, no less than other citizens, operate.</p>\n<p>A news organization&#39;s budget inevitably reflects decision-making about what news to cover, for what audience, and in what depth. When budgets are cut, editors may sacrifice reporters in distant news bureaus, reduce the number of staff assigned to low-income areas, or wipe entire communities from the publication&#39;s zone of interest.</p>"
-  },
-  {
-    "type": "shortcode",
-    "name": "Ai2html",
-    "attrs": {
-      "file": "little_experiment"
-    }
-  },
-  {
-    "type": "html",
-    "html": ""
-  },
-  {
-    "type": "shortcode",
-    "name": "Mapbox",
-    "attrs": {
-      "nbsp": true,
-      "size": "full",
-      "longitude": "2.35",
-      "latitude": "48.85"
-    }
-  },
-  {
-    "type": "html",
-    "html": "<p>Publishers, owners and other corporate executives, especially advertising sales executives, could try to use their powers over journalists to influence how news is reported and published. For this reason, journalists traditionally relied on top management to create and maintain a &quot;firewall&quot; between the news and other departments in a news organization to prevent undue influence on the news department.</p>"
-  },
-  {
-    "type": "shortcode",
-    "name": "VideoEmbed",
-    "attrs": {
-      "src": "https://youtu.be/dQw4w9WgXcQ",
-      "caption": "Rick Astley",
-      "autoplay": "false",
-      "controls": "true",
-      "size": "fit",
-      "mute": "true"
-    }
-  },
-  {
-    "type": "html",
-    "html": ""
   }
 ]
