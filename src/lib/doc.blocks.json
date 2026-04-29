@@ -10,10 +10,10 @@
       "scrollAlternateFrames": "[\"Turtle frame 1.jpg\", \"Turtle frame 2.jpg\"]",
       "steps": [
         {
-          "img": "/scrolly/01.jpg",
+          "img": "Turtle scenario 1.jpg",
           "alt": "Aerial view of the city at dusk",
           "pos": "center",
-          "text": "This is the first part of my cool turtle story!!!!!!"
+          "text": "This is the first part of my cool turtle story!!!!!"
         },
         {
           "img": "/scrolly/02.mp4",

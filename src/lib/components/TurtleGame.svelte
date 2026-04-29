@@ -21,7 +21,7 @@
 	const scenarioMap = scenarios as ScenarioMap;
 
 	const scenarioTexts: Record<string, string> = {
-		'scenario-1': 'You encounter a nesting sea turtle on the beach. What do you do?',
+		'scenario-1': 'Hello',
 		'scenario-2': 'The turtle is laying eggs. How do you handle the situation?',
 		'scenario-3': 'You have collected the eggs. Now what?',
 		'scenario-4': 'You need to transport the eggs to the hatchery. How?',
@@ -32,13 +32,13 @@
 	};
 
 	const scenarioImages: Record<string, string> = {
-		'scenario-1': '/images/scenario-1.jpg',
-		'scenario-2': '/images/scenario-2.jpg',
-		'scenario-3': '/images/scenario-3.jpg',
-		'scenario-4': '/images/scenario-4.jpg',
-		'scenario-5': '/images/scenario-5.jpg',
-		'end-game-bad': '/images/end-game-bad.jpg',
-		'end-game-good': '/images/end-game-good.jpg',
+		'scenario-1': 'Turtle scenario 1.jpg',
+		'scenario-2': 'Turtle scenario 2.jpg',
+		'scenario-3': 'Turtle scenario 3.jpg',
+		'scenario-4': 'scenario-4.jpg',
+		'scenario-5': 'scenario-5.jpg',
+		'end-game-bad': 'end-game-bad.jpg',
+		'end-game-good': 'end-game-good.jpg',
 	};
 
 	let scenarioId = $state('scenario-1');

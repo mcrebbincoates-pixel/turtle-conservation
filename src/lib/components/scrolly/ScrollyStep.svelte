@@ -41,6 +41,9 @@
 			<div class="step-text {posClass}" bind:this={textBoxEl}>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html step.text}
+				{#if step.img}
+			<img src={step.img} />
+			{/if}
 
 				{#if hasVideoButton}
 					<button
