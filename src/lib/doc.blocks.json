@@ -5,11 +5,63 @@
   },
   {
     "type": "shortcode",
-    "name": "NewComponant",
+    "name": "Scrolly",
+    "attrs": {
+      "scrollAlternateFrames": "[\"Turtle frame 1.jpg\", \"Turtle frame 2.jpg\"]",
+      "steps": [
+        {
+          "img": "/scrolly/01.jpg",
+          "alt": "Aerial view of the city at dusk",
+          "pos": "center",
+          "text": "This is the first part of my cool turtle story!!!!!!"
+        },
+        {
+          "img": "/scrolly/02.mp4",
+          "alt": "Close-up of hands typing",
+          "pos": "start",
+          "text": "Second block of text. This is a longer description to test design appearances. In the United States, journalism is produced by media organizations or by individuals. Bloggers are often, but not always, journalists. The Federal Trade Commission requires that bloggers who write about products received as promotional gifts to disclose that they received the products for free. This is intended to eliminate conflicts of interest and protect consumers."
+        },
+        {
+          "img": "/scrolly/03.jpg",
+          "alt": "Portrait of the interview subject",
+          "pos": "end",
+          "text": "Third block of text"
+        },
+        {
+          "img": "/scrolly/04.jpg",
+          "alt": "Portrait of the interview subject",
+          "pos": "end",
+          "text": "Forth block of text"
+        },
+        {
+          "img": "/scrolly/04.jpg",
+          "alt": "Portrait of the interview subject",
+          "pos": "end",
+          "text": "5th block of text"
+        }
+      ]
+    }
+  },
+  {
+    "type": "html",
+    "html": ""
+  },
+  {
+    "type": "shortcode",
+    "name": "TurtleGame",
     "attrs": {}
   },
   {
     "type": "html",
-    "html": "<h2>Governments have widely varying policies and practices towards journalists</h2>\n<p>By Name Here</p>\n<p>Such a code of conduct can, in the real world, be difficult to uphold consistently. Reporting and editing do not occur in a vacuum but always reflect the political context in which journalists, no less than other citizens, operate.</p>\n<p>A news organization&#39;s budget inevitably reflects decision-making about what news to cover, for what audience, and in what depth. When budgets are cut, editors may sacrifice reporters in distant news bureaus, reduce the number of staff assigned to low-income areas, or wipe entire communities from the publication&#39;s zone of interest.</p>"
+    "html": ""
+  },
+  {
+    "type": "shortcode",
+    "name": "Wave",
+    "attrs": {}
+  },
+  {
+    "type": "html",
+    "html": ""
   }
 ]

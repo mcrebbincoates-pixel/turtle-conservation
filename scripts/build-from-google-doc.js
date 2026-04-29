@@ -9,7 +9,7 @@ const DOC_URL = process.env.DOC_URL;
 function extractGoogleDocExportUrl(url) {
 	if (!url) return null;
 	const m = url.match(/\/document\/d\/([^/]+)/);
-	return m ? `https://docs.google.com/document/d/${m[1]}/export?output=html` : null;
+	return m ? `https://docs.google.com/document/d/${m[1]}/export?format=html` : null;
 }
 
 /**

@@ -1,0 +1,164 @@
+{
+		"scenario-1": [
+				{
+					"id": "choice-1",
+					"outcome": "scenario-2"
+				},
+				{
+					"id": "choice-2",
+					"outcome": "end-game-bad"
+				}
+			],
+			"scenario-2": [
+				{
+					"id": "choice-3",
+					"outcome": "scenario-3"
+				},
+				{
+					"id": "choice-4",
+					"outcome": "scenario-3"
+				}
+			],
+		"scenario-3": [
+			{
+					"id": "choice-5",
+					"outcome": "scenario-4"
+				},
+				{
+					"id": "choice-6",
+					"outcome": "scenario-4"
+				}
+		],
+
+	"scenario-4": [
+			{
+					"id": "choice-7",
+					"outcome": "scenario-5"
+				},
+				{
+					"id": "choice-8",
+					"outcome": "scenario-5"
+				}
+		],
+
+	"scenario-5": [
+			{
+					"id": "choice-9",
+					"outcome": "scenario-6"
+				},
+				{
+					"id": "choice-10",
+					"outcome": "scenario-6"
+				}
+		],
+	"scenario-6": [
+			{
+					"id": "choice-11",
+					"outcome": "scenario-7"
+				},
+				{
+					"id": "choice-12",
+					"outcome": "scenario-7"
+				}
+		],
+
+				"scenario-7": [
+			{
+					"id": "choice-13",
+					"outcome": "scenario-8"
+				},
+				{
+					"id": "choice-14",
+					"outcome": "scenario-8"
+				}
+		],
+
+				"scenario-8": [
+			{
+					"id": "choice-15",
+					"outcome": "scenario-9"
+				},
+				{
+					"id": "choice-16",
+					"outcome": "scenario-9"
+				}
+		],
+
+				"scenario-9": [
+			{
+					"id": "choice-17",
+					"outcome": "scenario-10"
+				},
+				{
+					"id": "choice-18",
+					"outcome": "scenario-10"
+				}
+		],
+
+				"scenario-10": [
+			{
+					"id": "choice-19",
+					"outcome": "scenario-11"
+				},
+				{
+					"id": "choice-20",
+					"outcome": "scenario-11"
+				}
+		],
+
+				"scenario-11": [
+			{
+					"id": "choice-21",
+					"outcome": "scenario-12"
+				},
+				{
+					"id": "choice-22",
+					"outcome": "scenario-12"
+				}
+		],
+
+				"scenario-12": [
+			{
+					"id": "choice-23",
+					"outcome": "scenario-13"
+				},
+				{
+					"id": "choice-24",
+					"outcome": "scenario-13"
+				}
+		],
+
+				"scenario-13": [
+			{
+					"id": "choice-25",
+					"outcome": "scenario-14"
+				},
+				{
+					"id": "choice-26",
+					"outcome": "scenario-14"
+				}
+		],
+
+				"scenario-14": [
+			{
+					"id": "choice-27",
+					"outcome": "end-game-good"
+				},
+				{
+					"id": "choice-28",
+					"outcome": "end-game-good"
+				}
+		],
+		"end-game-bad": [
+			{
+				"id": "choice-29",
+				"outcome": "end-game-bad"
+			}
+		],
+			"end-game-good": [
+			{
+				"id": "choice-30",
+				"outcome": "end-game-good"
+			}
+		]
+	}

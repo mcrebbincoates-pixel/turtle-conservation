@@ -69,13 +69,17 @@
 		return out;
 	}
 
+	// Import TurtleGame directly to avoid hydration issues with dynamic components
+	import TurtleGame from './TurtleGame.svelte';
 </script>
 
 {#each blocks as block, i (i)} 
 		{#if block.type === 'html'} 
 			{@html block.html}
 		{:else if block.type === 'shortcode'} 
-				{#if getComponent(block.name)} 
+				{#if block.name === 'TurtleGame'}
+					<TurtleGame />
+				{:else if getComponent(block.name)} 
 					<svelte:component 
 						this={getComponent(block.name)} 
 						{...normalizeAttrs(block.attrs)} 

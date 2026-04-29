@@ -38,7 +38,7 @@
 			class:end={step.pos === 'end'}
 		>
 			<!-- text box — the parent binds this ref for scroll trigger computation -->
-			<div class={posClass} bind:this={textBoxEl}>
+			<div class="step-text {posClass}" bind:this={textBoxEl}>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html step.text}
 
@@ -72,6 +72,15 @@
 </div>
 
 <style>
+
+.step-text{
+	background-color: rgb(193, 218, 218) !important;
+	width: 300px;
+	height: 300px;
+	border-radius: 150px !important;
+	border-color: rgb(red, rgb(105, 113, 128), blue);
+
+}
 	.step {
 		display: block;
 	}
@@ -89,12 +98,12 @@
 
 	/* Horizontal positioning */
 	.row.start {
-		justify-content: flex-start;
+		justify-content: center;
 	}
 	.row.center {
 		justify-content: center;
 	}
 	.row.end {
-		justify-content: flex-end;
+		justify-content: center;
 	}
 </style>

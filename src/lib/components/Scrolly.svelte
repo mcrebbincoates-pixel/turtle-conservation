@@ -1,408 +1,394 @@
 <script context="module" lang="ts">
-	export type { Step } from './scrolly/utils.js';
+  export type Step = {
+    img: string;              // filename/path under /static
+    alt?: string;             // used as aria-label
+    pos?: 'start' | 'center' | 'end';
+    text: string;             // HTML string
+  };
 </script>
 
 <script lang="ts">
-	import { onDestroy, onMount, tick } from 'svelte';
-	import { browser } from '$app/environment';
+  import { onDestroy, onMount, tick } from 'svelte';
+  import { browser } from '$app/environment';
+  import { base } from '$app/paths';
 
-	import ScrollyStep from './scrolly/ScrollyStep.svelte';
-	import {
-		type Step,
-		POS_CLASS,
-		toNum,
-		toMedia,
-		tryParseStepsFromBodyHtml
-	} from './scrolly/utils.js';
 
-	// ---- Props ----
 
-	export let steps: Step[] | undefined;
-	export let bodyHtml: string | undefined;
+  // Preferred: build step provides this
+  export let steps: Step[] | undefined;
 
-	/** Minimum height of each step in vh. */
-	export let vhPerStep: number | string | undefined = 100;
+  // Optional: paired shortcode body (if you decide to pass it through)
+  export let bodyHtml: string | undefined;
 
-	/** Crossfade duration in ms. */
-	export let fadeMs: number | string | undefined = 600;
+  // Optional: render only the step content without the sticky background image.
+  export let showBackground: boolean = true;
 
-	/** How far up from the bottom the text box sits (vh). 0 = bottom edge. */
-	export let textOffsetFromBottomVh: number | string | undefined = 0;
+  // Tuning knobs (optional)
+  export let vhPerStep: number | string | undefined = 100;  // how tall each step is in vh
+  export let fadeMs: number | string | undefined = 600;
 
-	/**
-	 * Fraction of the viewport height (0–1) the last text box must reach before
-	 * the background un-sticks and scrolls away with the content.
-	 */
-	export let lastCarryPoint: number | string | undefined = 0.5;
+  /** When set to two non-empty paths, sticky background alternates between them on scroll (per-step `img` is ignored for the background). */
+  export let scrollAlternateFrames: [string, string] | string | undefined = undefined;
 
-	// ---- Derived numeric values ----
+  /** Min scroll delta (px) before alternating frames when `scrollAlternateFrames` is active. */
+  export let scrollAlternatePx: number | string | undefined = undefined;
 
-	$: stepHeightVh = toNum(vhPerStep, 100);
-	$: fadeDurationMs = toNum(fadeMs, 600);
-	$: textBottomVh = toNum(textOffsetFromBottomVh, 0);
-	$: carryPoint = Math.max(0, Math.min(1, toNum(lastCarryPoint, 0.5)));
+  function toNum(v: number | string | undefined, fallback: number) {
+    if (typeof v === 'number') return v;
+    if (typeof v === 'string') {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : fallback;
+    }
+    return fallback;
+  }
 
-	// ---- Step resolution ----
+  function tryParseScrollAlternateFrames(value: string | [string, string] | undefined): [string, string] | undefined {
+    if (value === undefined) return undefined;
+    if (Array.isArray(value)) {
+      return value.length === 2 && typeof value[0] === 'string' && typeof value[1] === 'string'
+        ? [value[0], value[1]]
+        : undefined;
+    }
 
-	$: resolvedSteps =
-		(steps && steps.length ? steps : null) ?? tryParseStepsFromBodyHtml(bodyHtml) ?? [];
+    try {
+      const parsed = JSON.parse(value);
+      if (!Array.isArray(parsed) || parsed.length !== 2) return undefined;
+      const [first, second] = parsed;
+      return typeof first === 'string' && typeof second === 'string' ? [first, second] : undefined;
+    } catch {
+      return undefined;
+    }
+  }
 
-	// ---- Background crossfade state ----
+  const POS_CLASS: Record<string, string> = {
+    start: 'col-10 col-sm-5 bg-body-secondary p-4',
+    center: 'col-10 col-sm-6 bg-body-secondary p-4',
+    end: 'col-10 col-sm-5 bg-body-secondary p-4'
+  };
 
-	let bgIndex = 0;
-	// Tracks which step indices have had their media element rendered (and thus fetched).
-	// Grows as the user scrolls — never shrinks so back-navigation is instant.
-	// Plain Set reassigned via = so Svelte 4 legacy reactivity picks up changes.
-	// Starts empty — populated by the IntersectionObserver once the section is near
-	// the viewport, so media is not fetched on page load if the section is off-screen.
-	let loadedIndices: Set<number> = new Set();
-	let nearViewport = false;
 
-	$: activeAlt = resolvedSteps[bgIndex] ? toMedia(resolvedSteps[bgIndex]).alt : '';
+  function normalizeStaticPath(raw: string) {
+    const s = raw.trim();
+    if (!s) return s;
 
-	// ---- DOM refs ----
+    // If it's already an absolute URL (https://...), leave it alone
+    if (/^https?:\/\//i.test(s)) return s;
 
-	let sectionEl: HTMLElement | null = null;
-	let textBoxEls: (HTMLElement | null)[] = [];
-	let videoEls: (HTMLVideoElement | null)[] = [];
+    // Ensure it starts with a single "/"
+    const path = s.startsWith('/') ? s : '/' + s;
 
-	// ---- Per-step video play state ----
+    // Prefix SvelteKit base path (e.g., "/multimedia-template-2026")
+    return `${base}${path}`;
+  }
 
-	// 'idle'    — not yet played (shows play button with videoActionText label)
-	// 'playing' — currently playing (shows pause button)
-	// 'ended'   — finished playing (shows replay button)
-	// Steps without videoActionText are never tracked here — they loop freely.
-	let videoStates: Record<number, 'idle' | 'playing' | 'ended'> = {};
 
-	function stepHasVideoButton(i: number): boolean {
-		const step = resolvedSteps[i];
-		return !!step?.videoActionText && toMedia(step).kind === 'video';
-	}
+  // ---- Parse JSON from bodyHtml (fallback) ----
+  function stripHtmlToText(html: string) {
+    return html
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<\/p>\s*<p>/gi, '\n')
+      .replace(/<[^>]+>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&ldquo;|&rdquo;/g, '"')
+      .replace(/&lsquo;|&rsquo;/g, "'")
+      .replace(/&quot;/g, '"')
+      .replace(/&amp;/g, '&')
+      .trim();
+  }
 
-	async function ensureVideoPlaying(el: HTMLVideoElement | null, stepIndex: number) {
-		if (!el) return;
-		// Block autoplay until the user clicks the button.
-		if (stepHasVideoButton(stepIndex) && (videoStates[stepIndex] ?? 'idle') === 'idle') return;
-		try {
-			await tick();
-			const p = el.play();
-			if (p && typeof (p as Promise<void>).catch === 'function')
-				(p as Promise<void>).catch(() => {});
-		} catch {
-			/* empty */
-		}
-	}
+  function tryParseStepsFromBodyHtml(html: string | undefined): Step[] | null {
+    if (!html) return null;
+    const txt = stripHtmlToText(html);
 
-	function handleVideoEnded(stepIndex: number) {
-		if (stepHasVideoButton(stepIndex)) {
-			videoStates = { ...videoStates, [stepIndex]: 'ended' };
-		}
-	}
+    const start = txt.indexOf('[');
+    const end = txt.lastIndexOf(']');
+    if (start === -1 || end === -1 || end <= start) return null;
 
-	async function handleStepVideoPlay(stepIndex: number) {
-		const el = videoEls[stepIndex];
-		if (!el) return;
+    const json = txt.slice(start, end + 1);
+    try {
+      const arr = JSON.parse(json);
+      if (!Array.isArray(arr)) return null;
 
-		const state = videoStates[stepIndex] ?? 'idle';
+      const coerced: Step[] = arr
+        .map((x) => ({
+          img: typeof x.img === 'string' ? x.img : '',
+          alt: typeof x.alt === 'string' ? x.alt : undefined,
+          pos: x.pos === 'start' || x.pos === 'center' || x.pos === 'end' ? x.pos : 'center',
+          text: typeof x.text === 'string' ? x.text : ''
+        }))
+        .filter((s) => s.img && s.text);
 
-		if (state === 'playing') {
-			el.pause();
-			videoStates = { ...videoStates, [stepIndex]: 'idle' };
-			return;
-		}
+      return coerced.length ? coerced : null;
+    } catch {
+      return null;
+    }
+  }
 
-		// idle or ended → play; restart from beginning on replay
-		el.loop = false; // don't loop — we need the 'ended' event
-		if (state === 'ended') el.currentTime = 0;
+  $: resolvedSteps =
+    (steps && steps.length ? steps : null) ??
+    tryParseStepsFromBodyHtml(bodyHtml) ??
+    [];
 
-		videoStates = { ...videoStates, [stepIndex]: 'playing' };
-		try {
-			await tick();
-			const p = el.play();
-			if (p && typeof (p as Promise<void>).catch === 'function')
-				(p as Promise<void>).catch(() => {});
-		} catch {
-			/* empty */
-		}
-	}
+  $: stepHeightVh = toNum(vhPerStep, 100);
+  $: fadeDurationMs = toNum(fadeMs, 600);
+  $: scrollPxThreshold = toNum(scrollAlternatePx, 60);
 
-	// ---- Step transition ----
+  $: parsedScrollAlternateFrames = tryParseScrollAlternateFrames(scrollAlternateFrames);
 
-	async function showStep(newIndex: number) {
-		if (!resolvedSteps.length) return;
+  $: scrollFrameMode =
+    Array.isArray(parsedScrollAlternateFrames) &&
+    parsedScrollAlternateFrames.length === 2 &&
+    parsedScrollAlternateFrames[0].trim() !== '' &&
+    parsedScrollAlternateFrames[1].trim() !== '';
+  let activeIndex = 0;
 
-		const clamped = Math.max(0, Math.min(newIndex, resolvedSteps.length - 1));
-		if (clamped === bgIndex && loadedIndices.has(clamped)) return;
+  // We render two layers for crossfade
+  let topImg = '';
+  let bottomImg = '';
+  let fading = false;
 
-		// Leaving a video-button step: pause and reset so returning won't autoplay.
-		if (stepHasVideoButton(bgIndex)) {
-			videoEls[bgIndex]?.pause();
-			videoStates = { ...videoStates, [bgIndex]: 'idle' };
-		}
+  /** Which alternate frame (0 or 1) is fully shown after the last completed crossfade. */
+  let scrollFrameIndex = 0;
 
-		// Expand the load window to ±1 around the new index.
-		// Never shrinks — already-loaded media stays in the DOM for instant back-navigation.
-		// Reassign (not mutate) so Svelte 4 legacy reactivity triggers a re-render.
-		// eslint-disable-next-line svelte/prefer-svelte-reactivity -- SvelteSet.add() is not picked up by legacy {#if} blocks; plain Set + reassignment is required here.
-		const next = new Set(loadedIndices);
-		for (const n of [clamped - 1, clamped, clamped + 1]) {
-			if (n >= 0 && n < resolvedSteps.length) next.add(n);
-		}
-		loadedIndices = next;
-		bgIndex = clamped;
+  let fadeTimer: ReturnType<typeof setTimeout> | null = null;
+  let lastCommittedScrollY = 0;
 
-		// Wait for the DOM to render any newly added media element before playing.
-		await tick();
+  $: activeAlt = resolvedSteps[activeIndex]?.alt ?? '';
 
-		const el = videoEls[clamped];
-		if (el) {
-			el.loop = !resolvedSteps[clamped].videoActionText;
-			await ensureVideoPlaying(el, clamped);
-		}
-	}
+  function crossfadeToImage(nextImg: string) {
+    if (fading) return;
+    if (fadeTimer !== null) {
+      clearTimeout(fadeTimer);
+      fadeTimer = null;
+    }
+    bottomImg = nextImg;
+    fading = true;
+    fadeTimer = window.setTimeout(() => {
+      topImg = nextImg;
+      fading = false;
+      fadeTimer = null;
+    }, fadeDurationMs);
+  }
 
-	// ---- Scroll / sticky mechanics ----
+  $: if (resolvedSteps.length) {
+    if (scrollFrameMode && parsedScrollAlternateFrames) {
+      const f0 = normalizeStaticPath(parsedScrollAlternateFrames[0]);
+      topImg = f0;
+      bottomImg = f0;
+      scrollFrameIndex = 0;
+      activeIndex = 0;
+    } else {
+      const first = normalizeStaticPath(resolvedSteps[0].img);
+      topImg = first;
+      bottomImg = first;
+      activeIndex = 0;
+    }
+  }
 
-	let released = false;
-	let prevCarryOut = false;
-	let carryOut = false;
-	let rafPending = false;
+  let observer: IntersectionObserver | null = null;
+  let stepEls: (HTMLElement | null)[] = [];
 
-	function computePassedIndex(): number {
-		const eps = 1;
-		let passed = -1;
-		const lastIdx = textBoxEls.length - 1;
-		const carryY = window.innerHeight * carryPoint;
+  function switchTo(index: number) {
+    if (!resolvedSteps.length) return;
+    const next = Math.max(0, Math.min(index, resolvedSteps.length - 1));
+    if (next === activeIndex) return;
 
-		for (let i = 0; i < textBoxEls.length; i++) {
-			const el = textBoxEls[i];
-			if (!el) continue;
-			const top = el.getBoundingClientRect().top;
-			const threshold = i === lastIdx ? carryY : eps;
-			if (top <= threshold) passed = i;
-			else break;
-		}
+    if (!scrollFrameMode) {
+      crossfadeToImage(normalizeStaticPath(resolvedSteps[next].img));
+    }
 
-		return passed;
-	}
+    activeIndex = next;
+  }
 
-	function updateCarryOut() {
-		if (!resolvedSteps.length) {
-			carryOut = false;
-			released = false;
-			prevCarryOut = false;
-			return;
-		}
+  let scrollAltCleanup: (() => void) | null = null;
 
-		const lastIdx = resolvedSteps.length - 1;
-		const el = textBoxEls[lastIdx];
-		if (!el) {
-			carryOut = false;
-			released = false;
-			prevCarryOut = false;
-			return;
-		}
+  function teardownScrollAlt() {
+    scrollAltCleanup?.();
+    scrollAltCleanup = null;
+  }
 
-		const top = el.getBoundingClientRect().top;
-		const carryY = window.innerHeight * carryPoint;
+  function handleScrollAlternate() {
+   if (!scrollFrameMode || !parsedScrollAlternateFrames || fading) return;
 
-		carryOut = top <= carryY;
+    const y = window.scrollY;
+    const delta = y - lastCommittedScrollY;
+    if (Math.abs(delta) < scrollPxThreshold) return;
 
-		if (carryOut && !prevCarryOut) {
-			released = true;
-		}
+    const nextIdx = scrollFrameIndex === 0 ? 1 : 0;
+    crossfadeToImage(normalizeStaticPath(parsedScrollAlternateFrames[nextIdx]));
+    scrollFrameIndex = nextIdx;
+    lastCommittedScrollY = y;
+  }
 
-		if (!carryOut && prevCarryOut) {
-			released = false;
-		}
+  $: if (browser) {
+    teardownScrollAlt();
+    if (scrollFrameMode && resolvedSteps.length) {
+      lastCommittedScrollY = window.scrollY;
+      window.addEventListener('scroll', handleScrollAlternate, { passive: true });
+      scrollAltCleanup = () => window.removeEventListener('scroll', handleScrollAlternate);
+    }
+  }
 
-		prevCarryOut = carryOut;
-	}
+  async function setupObserver() {
+    if (!browser) return;
 
-	function updateFromScroll() {
-		rafPending = false;
-		if (!resolvedSteps.length) return;
+    observer?.disconnect();
+    observer = null;
 
-		const passed = computePassedIndex();
-		const wantedBg = Math.min(resolvedSteps.length - 1, Math.max(0, passed + 1));
-		showStep(wantedBg);
-		updateCarryOut();
-	}
+    if (!resolvedSteps.length) return;
 
-	function onScrollOrResize() {
-		if (!browser || rafPending) return;
-		rafPending = true;
-		requestAnimationFrame(updateFromScroll);
-	}
+    // Wait for DOM bindings
+    await tick();
 
-	// ---- Init when steps change ----
+    // Extra safety: some very old browsers
+    if (typeof IntersectionObserver === 'undefined') return;
 
-	$: if (resolvedSteps.length) {
-		bgIndex = 0;
-		// Only reset loadedIndices if the observer hasn't fired yet; once we're
-		// near the viewport we keep whatever indices are already loaded.
-		if (!nearViewport) loadedIndices = new Set();
-		carryOut = false;
-		videoStates = {};
-		textBoxEls.length = resolvedSteps.length;
-		videoEls.length = resolvedSteps.length;
-	} else {
-		bgIndex = 0;
-		loadedIndices = new Set();
-		carryOut = false;
-		textBoxEls = [];
-		videoEls = [];
-	}
+    observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
 
-	// ---- Intersection observer (lazy-load media) ----
+        if (!visible) return;
 
-	let observer: IntersectionObserver | null = null;
+        const idx = Number((visible.target as HTMLElement).dataset.stepIndex);
+        if (Number.isFinite(idx)) switchTo(idx);
+      },
+      {
+        root: null,
+        rootMargin: '-40% 0px -40% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1]
+      }
+    );
 
-	onMount(() => {
-		if (!browser) return;
+    for (const el of stepEls) {
+      if (el) observer.observe(el);
+    }
+  }
 
-		window.addEventListener('scroll', onScrollOrResize, { passive: true });
-		window.addEventListener('resize', onScrollOrResize);
 
-		// Preload the first two steps once the section is within 500 px of the
-		// viewport — early enough for images/video to arrive before they're seen.
-		observer = new IntersectionObserver(
-			async (entries) => {
-				if (!entries[0].isIntersecting) return;
-				observer?.disconnect();
-				observer = null;
+  onMount(() => {
+    if (browser) setupObserver();
+  });
 
-				nearViewport = true;
-				loadedIndices = new Set([0, 1].filter((i) => i < resolvedSteps.length));
 
-				await tick();
+  $: if (browser && resolvedSteps.length) {
+    stepEls.length = resolvedSteps.length;
+    setupObserver();
+  }
 
-				const el = videoEls[0];
-				if (el) {
-					el.loop = !resolvedSteps[0]?.videoActionText;
-					await ensureVideoPlaying(el, 0);
-				}
 
-				onScrollOrResize();
-			},
-			{ rootMargin: '500px 0px' }
-		);
-
-		if (sectionEl) observer.observe(sectionEl);
-	});
-
-	onDestroy(() => {
-		if (browser) {
-			window.removeEventListener('scroll', onScrollOrResize);
-			window.removeEventListener('resize', onScrollOrResize);
-		}
-		observer?.disconnect();
-	});
+  onDestroy(() => {
+    teardownScrollAlt();
+    if (fadeTimer !== null) {
+      clearTimeout(fadeTimer);
+      fadeTimer = null;
+    }
+    observer?.disconnect();
+    observer = null;
+  });
 </script>
 
 {#if resolvedSteps.length}
-	<section
-		bind:this={sectionEl}
-		class="scrolly full-bleed"
-		style={`--fade-ms:${fadeDurationMs}ms; --text-bottom:${textBottomVh}vh;`}
-	>
-		<!-- Sticky background: one layer per step, CSS-driven crossfade via opacity -->
-		<div
-			class={'scrolly-bg ' + (released ? 'unstick' : '')}
-			role="img"
-			aria-label={activeAlt}
-			style="height: 100vh; width: 100vw;"
-		>
-			{#each resolvedSteps as step, i (i)}
-				{@const m = toMedia(step)}
-				<div class="layer" class:active={i === bgIndex} aria-hidden="true">
-					{#if loadedIndices.has(i)}
-						{#if m.kind === 'image'}
-							<div
-								class="media image"
-								style={`background-image:url("${encodeURI(m.url)}")`}
-							></div>
-						{:else}
-							<video
-								class="media video"
-								bind:this={videoEls[i]}
-								src={m.url}
-								muted
-								playsinline
-								preload="metadata"
-								on:ended={() => handleVideoEnded(i)}
-							></video>
-						{/if}
-					{/if}
-				</div>
-			{/each}
-		</div>
+  <section class="scrolly full-bleed" style={`--fade-ms:${fadeDurationMs}ms;`}>
+    {#if showBackground}
+      <div class="scrolly-bg" role="img" aria-label={activeAlt} style="height: 100vh; width: 100vw;">
+        <div class="bg-layer top" style={`background-image:url("${encodeURI(topImg)}")`} aria-hidden="true"></div>
+        <div
+          class={"bg-layer bottom " + (fading ? 'show' : '')}
+          style={`background-image:url("${bottomImg}")`}
+          aria-hidden="true"
+        ></div>
+      </div>
+    {/if}
 
-		<!-- Scrolling steps -->
-		<div class="scrolly-steps">
-			{#each resolvedSteps as step, i (i)}
-				<ScrollyStep
-					{step}
-					{stepHeightVh}
-					posClass={POS_CLASS[step.pos ?? 'center']}
-					vState={videoStates[i] ?? 'idle'}
-					hasVideoButton={stepHasVideoButton(i)}
-					bind:textBoxEl={textBoxEls[i]}
-					on:videoplay={() => handleStepVideoPlay(i)}
-				/>
-			{/each}
-		</div>
-	</section>
+    <div class="scrolly-steps">
+      {#each resolvedSteps as step, i (i)}
+        <div
+          class="step"
+          data-step-index={i}
+          bind:this={stepEls[i]}
+          style={`min-height:${stepHeightVh}vh;`}
+        >
+          <div class="container-fluid">
+            <div
+              class="row align-items-center px-md-4 px-lg-5"
+              class:start={step.pos === 'start'}
+              class:center={step.pos === 'center'}
+              class:end={step.pos === 'end'}
+              style="min-height: 100vh;"
+            >
+
+              <div class={POS_CLASS[step.pos ?? 'center']}>
+                {@html step.text}
+              </div>
+            </div>
+          </div>
+        </div>
+      {/each}
+    </div>
+  </section>
 {/if}
 
 <style>
-	.scrolly {
-		position: relative;
-	}
+  .scrolly { position: relative; }
 
-	/* Sticky by default */
-	.scrolly-bg {
-		position: sticky;
-		top: 0;
-		left: 0;
-		overflow: hidden;
-		z-index: 0;
-		margin-bottom: 2rem;
-	}
+  .scrolly-bg {
+    position: sticky;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
 
-	/* One layer per step; CSS transition handles the crossfade */
-	.layer {
-		position: absolute;
-		inset: 0;
-		opacity: 0;
-		transition: opacity var(--fade-ms) ease;
-		transform: translateZ(0);
-	}
+  .bg-layer {
+    position: absolute;
+    inset: 0;
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: translateZ(0);
+  }
 
-	.layer.active {
-		opacity: 1;
-	}
+  .bg-layer.top { opacity: 1; }
 
-	.media {
-		position: absolute;
-		inset: 0;
-	}
+  .bg-layer.bottom {
+    opacity: 0;
+    transition: opacity var(--fade-ms) ease;
+  }
 
-	.media.image {
-		background-size: cover;
-		background-position: center;
-	}
+  .bg-layer.bottom.show { opacity: 1; }
 
-	.media.video {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		object-position: center;
-	}
+  .scrolly-steps { position: relative; z-index: 1; }
 
-	/* Steps sit above the sticky background */
-	.scrolly-steps {
-		position: relative;
-		z-index: 1;
-	}
+  .step { display: block; }
+
+  .step :global(.bg-body-secondary) { 
+    border-radius: 50%;
+    width: 475px;
+    height: 475px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .step :global(.bg-body-secondary p) {
+    text-align: center;
+    margin: 0;
+  }
+
+  /* Horizontal positioning via flexbox */
+  .row.start {
+    justify-content: center;
+  }
+
+  .row.center {
+    justify-content: center;
+  }
+
+  .row.end {
+    justify-content: center;
+  }
+
 </style>
