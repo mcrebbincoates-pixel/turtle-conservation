@@ -320,7 +320,10 @@
             >
 
               <div class={POS_CLASS[step.pos ?? 'center']}>
-                {@html step.text}
+                  <p>{@html step.text}</p>
+                  {#if step.img}
+                  <img class="scrolly-img" src="{step.img}" alt="{step.alt}" />
+                  {/if}
               </div>
             </div>
           </div>
@@ -340,6 +343,7 @@
     overflow: hidden;
     z-index: 0;
   }
+
 
   .bg-layer {
     position: absolute;
@@ -361,6 +365,13 @@
 
   .scrolly-steps { position: relative; z-index: 1; }
 
+  .scrolly-img {
+    display: block;
+    width: 75%;
+    text-align: center;
+    margin: 10px auto 0;
+  }
+
   .step { display: block; }
 
   .step :global(.bg-body-secondary) { 
@@ -368,6 +379,7 @@
     width: 475px;
     height: 475px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
