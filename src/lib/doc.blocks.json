@@ -38,6 +38,12 @@
           "alt": "Portrait of the interview subject",
           "pos": "end",
           "text": "5th block of text"
+        },
+        {
+          "img": "/scrolly/04.jpg",
+          "alt": "Portrait of the interview subject",
+          "pos": "end",
+          "text": "6th block of text"
         }
       ]
     }

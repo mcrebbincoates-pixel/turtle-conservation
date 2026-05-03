@@ -21,22 +21,40 @@
 	const scenarioMap = scenarios as ScenarioMap;
 
 	const scenarioTexts: Record<string, string> = {
-		'scenario-1': 'Hello',
-		'scenario-2': 'The turtle is laying eggs. How do you handle the situation?',
-		'scenario-3': 'You have collected the eggs. Now what?',
-		'scenario-4': 'You need to transport the eggs to the hatchery. How?',
-		'scenario-5': 'At the hatchery, the eggs are ready to be incubated. What next?',
+		'scenario-1': 'A mother turtle comes ashore to lay her eggs. What do you do?',
+		'scenario-2': 'The mother turtle starts laying her clutch. You need to get the eggs from her. What do you do?',
+		'scenario-3': 'You have the eggs from her. Now you need to transport them. What do you do?',
+		'scenario-4': 'The eggs are in the bucket. Now you need to get them to the hatchery. What do you do?',
+		'scenario-5': 'Now you need to burry the eggs. What do you do?',
+		'scenario-6': 'The hole is dug. Before you put the eggs in, do you...',
+		'scenario-7': 'You are ready to bury the eggs. What do you do?',
+		'scenario-8': 'The eggs are in the nest. Do you...',
+		'scenario-9': 'You are ready to cover the eggs with sand. What do you do?',
+		'scenario-10': 'Now the eggs will incubate. Should you...',
+		'scenario-11': 'The eggs have hatched! Now you need to get them into the ocean. What do you do?',
+		'scenario-12': 'It is currently nightime. What do you do?',
+		'scenario-13': 'The hatchlings need to get to the ocean. What do you do?',
+		'scenario-14': 'The hatchlings are almost there! What do you do?',
 		// Add more scenario descriptions as needed
-		'end-game-bad': 'Game over. The turtle population has suffered due to your choices.',
-		'end-game-good': 'Congratulations! You have successfully conserved the turtle population.',
+		'end-game-bad': 'Game over. You have killed all the baby turtles.',
+		'end-game-good': 'Congratulations! A good portion of the hatchlings made it to the ocean!',
 	};
 
 	const scenarioImages: Record<string, string> = {
 		'scenario-1': 'Turtle scenario 1.jpg',
 		'scenario-2': 'Turtle scenario 2.jpg',
 		'scenario-3': 'Turtle scenario 3.jpg',
-		'scenario-4': 'scenario-4.jpg',
-		'scenario-5': 'scenario-5.jpg',
+		'scenario-4': 'Turtle scenario 4.jpg',
+		'scenario-5': 'Turtle scenario 5.jpg',
+		'scenario-6': 'Turtle scenario 6.jpg',
+		'scenario-7': 'Turtle scenario 7.jpg',
+		'scenario-8': 'Turtle scenario 8.png',
+		'scenario-9': 'Turtle scenario 9.png',
+		'scenario-10': 'Turtle scenario 10.png',
+		'scenario-11': 'Turtle scenario 11.png',
+		'scenario-12': 'Turtle scenario 12.png',
+		'scenario-13': 'Turtle scenario 13.jpg',
+		'scenario-14': 'Turtle scenario 14.png',
 		'end-game-bad': 'end-game-bad.jpg',
 		'end-game-good': 'end-game-good.jpg',
 	};
@@ -122,7 +140,6 @@
 		height: auto;
 		border-radius: 12px;
 		margin: 0 0 18px;
-		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 	}
 
 	.game-over {

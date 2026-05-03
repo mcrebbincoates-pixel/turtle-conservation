@@ -1,12 +1,12 @@
 {
 	"choice-1": {
 		"id": 1,
-		"text": "Wait to approach ..",
+		"text": "Wait to approach the mother until she starts laying eggs",
 		"count": 0
 	},
 	"choice-2": {
 		"id": 2,
-		"text": "Follow the mother ...",
+		"text": "Follow the mother to start to her nesting site",
 		"count": -100
 	},
 
@@ -14,12 +14,12 @@
 	
 	"choice-3": {
 		"id": 3,
-		"text": "While she is laying ...",
+		"text": "While she is laying the clutch",
 		"count": -1
 	},
 	"choice-4": {
 		"id": 4,
-		"text": "Wait for her to finish ...",
+		"text": "Wait for her to finish and head back to the ocean",
 		"count": 0
 	},
 
@@ -27,12 +27,12 @@
 	
 	"choice-5": {
 		"id": 5,
-		"text": "Put eggs in bucket ...",
+		"text": "Put all the eggs in bucket a bucket",
 		"count": -1
 	},
 		"choice-6": {
 		"id": 6,
-		"text": "Put eggs in bucket with sand...",
+		"text": "Put all the eggs in bucket and pack it tight with sand",
 		"count": 0
 	},
 
@@ -40,12 +40,12 @@
 	
 	"choice-7": {
 		"id": 7,
-		"text": "Run bucket to hatchery...",
+		"text": "Run bucket to hatchery. We need to get them in the ground ASAP",
 		"count": -2
 	},
 	"choice-8": {
 		"id": 8,
-		"text": "Walk bucket to hatchery...",
+		"text": "Walk bucket to hatchery. We don't want to jostle them",
 		"count": 0
 	},
 
@@ -54,13 +54,13 @@
 	
 	"choice-9": {
 		"id": 9,
-		"text": "Dig hole (too shallow)...",
+		"text": "Dig hole for the clutch about 15 inches deep",
 		"count": -10
 	},
 
 	"choice-10": {
 		"id": 10,
-		"text": "Dig hole (right depth)...",
+		"text": "Dig hole for the clutch about 30 inches deep",
 		"count": 0
 	},
 
@@ -69,13 +69,13 @@
 
 	"choice-11": {
 		"id": 11,
-		"text": "Treat sand with anti-fingal...",
+		"text": "Treat the sand with anti-fingal spray",
 		"count": 0
 	},
 
 	"choice-12": {
 		"id": 12,
-		"text": "Don't treat snad with anti-fungal...",
+		"text": "Leave the sand be",
 		"count": -20
 	},
 
@@ -84,13 +84,13 @@
 
 	"choice-13": {
 		"id": 13,
-		"text": "Lower eggs in with hand...",
+		"text": "Lower the eggs into the nest with your hand",
 		"count": 0
 	},
 
 	"choice-14": {
 		"id": 14,
-		"text": "Lower eggs in with shovel...",
+		"text": "Lower the eggs into the nest with a shovel.",
 		"count": -15
 	},
 
@@ -100,13 +100,13 @@
 
 	"choice-15": {
 		"id": 15,
-		"text": "Netting around nest...",
+		"text": "Place netting around the nest",
 		"count": 0
 	},
 
 	"choice-16": {
 		"id": 16,
-		"text": "No netting around nest...",
+		"text": "Leave the nest be",
 		"count": -20
 	},
 
@@ -115,12 +115,12 @@
 
 	"choice-17": {
 		"id": 17,
-		"text": "Sand layer with hand...",
+		"text": "Cover the nest using your hands to scoop the sand",
 		"count": 0
 	},
 	"choice-18": {
 		"id": 18,
-		"text": "All sand with shovel...",
+		"text": "Cover the nest using a shovel to scoop the sand",
 		"count": -4
 	},
 
@@ -130,12 +130,12 @@
 
 	"choice-19": {
 		"id": 19,
-		"text": "Wait 60 days and dig up the nest...",
+		"text": "Wait about 35 days. Then dig up the hatchlings.",
 		"count": -100
 	},
 	"choice-20": {
 		"id": 20,
-		"text": "Wait for hatchlings to emerge from the nest...",
+		"text": "Wait for the hatchlings to come out on their own",
 		"count": 0
 	},
 
@@ -145,12 +145,12 @@
 
 	"choice-21": {
 		"id": 21,
-		"text": "Collect hatchlings in bucket...",
+		"text": "Collect the hatchlings into a bucket",
 		"count": 0
 	},
 	"choice-22": {
 		"id": 22,
-		"text": "Other option...",
+		"text": "Open the hatchery door for the hactlings to find the oeacn",
 		"count": -15
 	},
 
@@ -159,12 +159,12 @@
 
 	"choice-23": {
 		"id": 23,
-		"text": "Take hatchlings to release in the morning...",
+		"text": "Wait to release the hatchlings in the morning",
 		"count": -25
 	},
 	"choice-24": {
 		"id": 24,
-		"text": "Take hatchlings to relase at night...",
+		"text": "Release the hatchlings now",
 		"count": 0
 	},
 
@@ -173,22 +173,22 @@
 
 	"choice-25": {
 		"id": 25,
-		"text": "Build ramp...",
+		"text": "Build a ramp to guide the hatchlings to the oceam",
 		"count": 0
 	},
 	"choice-26": {
 		"id": 26,
-		"text": "Roam free to the ocean...",
+		"text": "Let the hatchlings roam free to the ocean",
 		"count": -10
 	},
 	"choice-27": {
 		"id": 27,
-		"text": "Release hatchlings in the waves...",
+		"text": "Release the hatchlings in the waves",
 		"count": -10
 	},
 	"choice-28": {
 		"id": 28,
-		"text": "Release hatchlings on the beach...",
+		"text": "Release the hatchlings on the beach",
 		"count": 0
 	},
 	"choice-29": {
