@@ -9,7 +9,7 @@
   const turtleFrames = ['/Turtle small 1.jpg', '/Turtle small 2.jpg'];
 
   /** Max downward travel (px) so the turtle stays inside the band above the wave. */
-  const MAX_TURTLE_TRAVEL = 100;
+  const MAX_TURTLE_TRAVEL = 1;
 
   let waveIndex = $state(0);
   let turtleIndex = $state(0);
@@ -84,7 +84,7 @@
   .turtle-wrapper {
     position: sticky;
     width: 100%;
-    height: 400px;
+    height: 200px;
     /* overflow: hidden; */
     top: 0;
     z-index: 0;
@@ -140,7 +140,7 @@
         src={normalizeStaticPath(waveFrames[waveIndex])}
         alt="Animated wave frame"
         loading="lazy"
-        transition:fade={{ duration: 300 }}
+        transition:fade={{ duration: 10 }}
       />
     {/key}
   </div>

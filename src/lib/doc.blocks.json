@@ -10,40 +10,80 @@
       "scrollAlternateFrames": "[\"Turtle frame 1.jpg\", \"Turtle frame 2.jpg\"]",
       "steps": [
         {
-          "img": "Turtle scenario 1.jpg",
-          "alt": "Aerial view of the city at dusk",
+          "img": "/scrolly/",
           "pos": "center",
-          "text": "This is the first part of my cool turtle story!!!!!"
+          "text": "That was the headline in the press release from the International Union for the Conservation of Nature (IUCN) in October 2025. They had just reclassified green sea turtles from Endangered to Least Concern."
         },
         {
-          "img": "/scrolly/02.mp4",
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "After decades of conservation efforts across the globe, this was a huge win for scientists and conservationists."
+        },
+        {
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "But five months later, Pulihara, a sea turtle conservation NGO in Malaysia, opened its yearly nesting operations, business as usual."
+        },
+        {
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "Conservationists and scientists warn that the efforts to save the species need to remain intact. \"I think we'll go back to square one if it's not sustained,\" said Isandra Shazlynn, Pulihara's Project Manager."
+        },
+        {
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "In 2013, Pulihara joined decades of global conservation efforts. The NGO operates multiple beaches on the eastern peninsula of Malaysia."
+        },
+        {
+          "img": "/scrolly/Malaysia map.png",
           "alt": "Close-up of hands typing",
           "pos": "start",
-          "text": "Second block of text. This is a longer description to test design appearances. In the United States, journalism is produced by media organizations or by individuals. Bloggers are often, but not always, journalists. The Federal Trade Commission requires that bloggers who write about products received as promotional gifts to disclose that they received the products for free. This is intended to eliminate conflicts of interest and protect consumers."
+          "text": "Dungun Malaysia"
         },
         {
-          "img": "/scrolly/03.jpg",
-          "alt": "Portrait of the interview subject",
-          "pos": "end",
-          "text": "Third block of text"
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "Throughout the nesting season, staff move turtle eggs to hatcheries where the clutches can develop, protected from predators and poachers. When the eggs hatch, they release the hatchlings back into the ocean."
         },
         {
-          "img": "/scrolly/04.jpg",
-          "alt": "Portrait of the interview subject",
-          "pos": "end",
-          "text": "Forth block of text"
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "They expect that about 1 in 1,000 of those hatchlings will make it to adulthood."
         },
         {
-          "img": "/scrolly/04.jpg",
-          "alt": "Portrait of the interview subject",
-          "pos": "end",
-          "text": "5th block of text"
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "Green sea turtles become adults around 25 years old and face many threats along the way including natural predators, and human caused threats such as poaching, pollution, and habitat destruction."
         },
         {
-          "img": "/scrolly/04.jpg",
-          "alt": "Portrait of the interview subject",
-          "pos": "end",
-          "text": "6th block of text"
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "According to the IUCN, the global green sea turtle population has increased by about 28% since the 1970s. However, researchers say that the reclassification does not mean the species is safe."
+        },
+        {
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "Dr. Nicolas J. Pilcher, one of the scientists who determined the IUCN reclassification of the species, said that the change in status did not mean that the green sea turtles are not at risk; it meant that the population decline met a specific threshold for changing its status. Least Concern means that they are not about to go extinct any time soon, Pilcher said in an email, This does not mean they can not be endangered in some places (indeed they are)..."
+        },
+        {
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "In addition to continuing their hatchery work, Pulihara has been increasing their efforts for community outreach."
+        },
+        {
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "Sea turtle eggs have historically been a delicacy in Malaysia and despite a law passed in 2022 banning their consumption, there is a large black market for the eggs. Shazlynn said Pulihara is working to have the messaging come from inside local communities through partnerships with local schools. The mindset change happens from a community member to the community members, said Shazlynn."
+        },
+        {
+          "img": "/scrolly/",
+          "pos": "center",
+          "text": "Dr. Melissa Staines, a sea turtle researcher from Australia, warned that if conservation efforts decreased due to the status change, the global species could quickly go into further decline without us noticing."
+        },
+        {
+          "img": "//",
+          "pos": "center",
+          "text": "If we lose conservation, and we lose monitoring, and we lose all the funds that are going into that, we could very likely lose the indicators that would tell us that the population is struggling long before we actually see a population decline, said Staines. We could be too late."
         }
       ]
     }
