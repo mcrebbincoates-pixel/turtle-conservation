@@ -322,7 +322,7 @@
               <div class={POS_CLASS[step.pos ?? 'center']}>
                   <p>{@html step.text}</p>
                   {#if step.img}
-                  <img class="scrolly-img" src="{step.img}" alt="{step.alt}" />
+                  <img class="scrolly-img" src="{normalizeStaticPath(step.img)}" alt="{step.alt}" />
                   {/if}
               </div>
             </div>
