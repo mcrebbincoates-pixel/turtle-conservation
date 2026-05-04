@@ -42,8 +42,8 @@
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html step.text}
 				{#if step.img}
-			<img src={step.img} />
-			{/if}
+					<img class="step-img" src={step.img} alt={step.alt} />
+				{/if}
 
 				{#if hasVideoButton}
 					<button
@@ -82,6 +82,12 @@
 	height: 300px;
 	border-radius: 150px !important;
 	border-color: rgb(red, rgb(105, 113, 128), blue);
+
+}
+
+.step-img {
+   width: 350px !important;
+   height: auto !important;
 
 }
 	.step {

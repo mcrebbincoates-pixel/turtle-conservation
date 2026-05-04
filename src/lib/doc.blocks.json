@@ -10,80 +10,84 @@
       "scrollAlternateFrames": "[\"Turtle frame 1.jpg\", \"Turtle frame 2.jpg\"]",
       "steps": [
         {
-          "img": "/scrolly/",
+          "img": "",
+          "pos": "center",
+          "text": "\"Green sea turtle rebounds thanks to global conservation action\""
+        },
+        {
+          "img": "",
           "pos": "center",
           "text": "That was the headline in the press release from the International Union for the Conservation of Nature (IUCN) in October 2025. They had just reclassified green sea turtles from Endangered to Least Concern."
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
           "text": "After decades of conservation efforts across the globe, this was a huge win for scientists and conservationists."
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
           "text": "But five months later, Pulihara, a sea turtle conservation NGO in Malaysia, opened its yearly nesting operations, business as usual."
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
           "text": "Conservationists and scientists warn that the efforts to save the species need to remain intact. \"I think we'll go back to square one if it's not sustained,\" said Isandra Shazlynn, Pulihara's Project Manager."
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
           "text": "In 2013, Pulihara joined decades of global conservation efforts. The NGO operates multiple beaches on the eastern peninsula of Malaysia."
         },
         {
-          "img": "/scrolly/Malaysia map.png",
-          "alt": "Close-up of hands typing",
+          "img": "/scrolly/Bigbiggest map.png",
           "pos": "start",
-          "text": "Dungun Malaysia"
+          "text": ""
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
           "text": "Throughout the nesting season, staff move turtle eggs to hatcheries where the clutches can develop, protected from predators and poachers. When the eggs hatch, they release the hatchlings back into the ocean."
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
           "text": "They expect that about 1 in 1,000 of those hatchlings will make it to adulthood."
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
           "text": "Green sea turtles become adults around 25 years old and face many threats along the way including natural predators, and human caused threats such as poaching, pollution, and habitat destruction."
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
           "text": "According to the IUCN, the global green sea turtle population has increased by about 28% since the 1970s. However, researchers say that the reclassification does not mean the species is safe."
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
-          "text": "Dr. Nicolas J. Pilcher, one of the scientists who determined the IUCN reclassification of the species, said that the change in status did not mean that the green sea turtles are not at risk; it meant that the population decline met a specific threshold for changing its status. Least Concern means that they are not about to go extinct any time soon, Pilcher said in an email, This does not mean they can not be endangered in some places (indeed they are)..."
+          "text": "Dr. Nicolas J. Pilcher, one of the scientists who determined the IUCN reclassification of the species, said that the change in status did not mean that the green sea turtles are not at risk; it meant that the population decline met a specific threshold for changing its status. \"Least Concern means that they are not about to go extinct any time soon, Pilcher said in an email, This does not mean they can not be endangered in some places (indeed they are)...\""
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
           "text": "In addition to continuing their hatchery work, Pulihara has been increasing their efforts for community outreach."
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
-          "text": "Sea turtle eggs have historically been a delicacy in Malaysia and despite a law passed in 2022 banning their consumption, there is a large black market for the eggs. Shazlynn said Pulihara is working to have the messaging come from inside local communities through partnerships with local schools. The mindset change happens from a community member to the community members, said Shazlynn."
+          "text": "Sea turtle eggs have historically been a delicacy in Malaysia and despite a law passed in 2022 banning their consumption, there is a large black market for the eggs. Shazlynn said Pulihara is working to have the messaging come from inside local communities through partnerships with local schools. \"The mindset change happens from a community member to the community members,\" said Shazlynn."
         },
         {
-          "img": "/scrolly/",
+          "img": "",
           "pos": "center",
           "text": "Dr. Melissa Staines, a sea turtle researcher from Australia, warned that if conservation efforts decreased due to the status change, the global species could quickly go into further decline without us noticing."
         },
         {
-          "img": "//",
+          "img": "",
           "pos": "center",
-          "text": "If we lose conservation, and we lose monitoring, and we lose all the funds that are going into that, we could very likely lose the indicators that would tell us that the population is struggling long before we actually see a population decline, said Staines. We could be too late."
+          "text": "\"If we lose conservation, and we lose monitoring, and we lose all the funds that are going into that, we could very likely lose the indicators that would tell us that the population is struggling long before we actually see a population decline,\" said Staines. \"We could be too late.\""
         }
       ]
     }

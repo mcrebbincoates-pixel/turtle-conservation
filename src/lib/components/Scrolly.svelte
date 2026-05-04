@@ -292,14 +292,14 @@
 {#if resolvedSteps.length}
   <section class="scrolly full-bleed" style={`--fade-ms:${fadeDurationMs}ms;`}>
     {#if showBackground}
-      <div class="scrolly-bg" role="img" aria-label={activeAlt} style="height: 100vh; width: 100vw;">
-        <div class="bg-layer top" style={`background-image:url("${encodeURI(topImg)}")`} aria-hidden="true"></div>
-        <div
-          class={"bg-layer bottom " + (fading ? 'show' : '')}
-          style={`background-image:url("${bottomImg}")`}
-          aria-hidden="true"
-        ></div>
-      </div>
+    <div class="scrolly-bg" role="img" aria-label={activeAlt} style="height: 100vh; width: 100vw;">
+      <div class="bg-layer top" style={`background-image:url("${encodeURI(topImg)}")`} aria-hidden="true"></div>
+      <div
+        class={"bg-layer bottom " + (fading ? 'show' : '')}
+        style={`background-image:url("${bottomImg}")`}
+        aria-hidden="true"
+      ></div>
+    </div>
     {/if}
 
     <div class="scrolly-steps">

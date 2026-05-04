@@ -288,8 +288,8 @@ function compilePairedScrolly(block) {
 				text: typeof x.text === 'string' ? x.text : '',
 				kind: x.kind === 'image' || x.kind === 'video' ? x.kind : undefined,
 				videoActionText: typeof x.videoActionText === 'string' ? x.videoActionText : undefined
-			}))
-			.filter((s) => s.img && s.text);
+			}));
+			
 
 		const nextAttrs = { ...(block.attrs || {}) };
 		nextAttrs.steps = steps;
